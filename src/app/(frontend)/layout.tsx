@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -15,6 +15,13 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// The site is dark-only, so the mobile browser UI (Chrome address bar, etc.)
+// matches the page background.
+export const viewport: Viewport = {
+  themeColor: "#000319",
+  colorScheme: "dark",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const og = await getOgImage();

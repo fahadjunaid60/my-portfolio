@@ -15,7 +15,12 @@ export type Post = {
 };
 
 type MediaRef =
-  | { filename?: string | null; width?: number | null; height?: number | null }
+  | {
+      url?: string | null;
+      filename?: string | null;
+      width?: number | null;
+      height?: number | null;
+    }
   | string
   | null
   | undefined;

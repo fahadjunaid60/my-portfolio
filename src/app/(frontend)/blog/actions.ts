@@ -16,9 +16,9 @@ export async function submitComment(
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const content = String(formData.get("content") ?? "").trim();
-  const postId = String(formData.get("postId") ?? "").trim();
+  const postId = Number(String(formData.get("postId") ?? "").trim());
 
-  if (!name || !content || !postId) {
+  if (!name || !content || !postId || Number.isNaN(postId)) {
     return { status: "error", message: "Please add your name and a comment." };
   }
   if (email && !EMAIL_RE.test(email)) {

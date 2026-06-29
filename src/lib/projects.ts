@@ -18,11 +18,19 @@ export type ProjectFull = ProjectCard & {
   appUrl?: string; // app / login
 };
 
-type MediaRef = { filename?: string | null } | string | null | undefined;
+type MediaRef =
+  | { url?: string | null; filename?: string | null }
+  | string
+  | null
+  | undefined;
 
-// Files live in /public/media, so build the static URL from the filename.
+// Prefer the media doc's URL (cloud storage when configured); fall back to the
+// local /media path otherwise.
 function mediaUrl(m: MediaRef): string {
-  if (m && typeof m === "object" && m.filename) return `/media/${m.filename}`;
+  if (m && typeof m === "object") {
+    if (m.url) return m.url;
+    if (m.filename) return `/media/${m.filename}`;
+  }
   return "";
 }
 

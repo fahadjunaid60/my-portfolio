@@ -2,6 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildConfig } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { s3Storage } from "@payloadcms/storage-s3";
 
 import { Users } from "./src/collections/Users";
 import { Posts } from "./src/collections/Posts";
@@ -23,6 +24,33 @@ export default buildConfig({
   },
   collections: [Users, Posts, Projects, Messages, Comments, Media],
   globals: [SiteSettings],
+  // Cloud storage for uploads (Supabase Storage, S3-compatible). Enabled only
+  // when the S3 env vars are present; otherwise falls back to local disk so
+  // dev still works without credentials.
+  plugins: [
+    s3Storage({
+      enabled: Boolean(process.env.S3_BUCKET),
+      collections: {
+        media: {
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => {
+            const key = prefix ? `${prefix}/${filename}` : filename;
+            return `${process.env.S3_PUBLIC_URL}/${key}`;
+          },
+        },
+      },
+      bucket: process.env.S3_BUCKET || "",
+      config: {
+        forcePathStyle: true,
+        endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || "",
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "",
+        },
+      },
+    }),
+  ],
   // Optional one-time seed: set SEED_ON_INIT=true and start the app. Seeds the
   // original posts and projects only when each collection is empty, then is a
   // no-op. Useful on Windows/Node 24 where the `payload run` CLI can fail.

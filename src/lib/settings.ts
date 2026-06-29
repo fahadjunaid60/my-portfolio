@@ -5,15 +5,20 @@ import { getPayloadClient } from "./payload";
 export type OgImage = { url: string; width?: number; height?: number };
 
 type MediaRef =
-  | { filename?: string | null; width?: number | null; height?: number | null }
+  | {
+      url?: string | null;
+      filename?: string | null;
+      width?: number | null;
+      height?: number | null;
+    }
   | string
   | null
   | undefined;
 
 export function mediaToOg(m: MediaRef): OgImage | null {
-  if (m && typeof m === "object" && m.filename) {
+  if (m && typeof m === "object" && (m.url || m.filename)) {
     return {
-      url: `/media/${m.filename}`,
+      url: m.url || `/media/${m.filename}`,
       width: m.width ?? undefined,
       height: m.height ?? undefined,
     };
