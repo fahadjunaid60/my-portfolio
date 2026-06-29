@@ -3,7 +3,7 @@ import type { Post } from "./blog";
 // Original hardcoded posts, used once to seed the Payload "posts" collection.
 // After seeding, posts are managed in the admin panel; this file is only the
 // initial content source (see `npm run seed`).
-export const seedPosts: Post[] = [
+export const seedPosts: Omit<Post, "id">[] = [
   {
     slug: "default-stack-dotnet-nextjs",
     title: "Why I default to .NET + Next.js for client work",
