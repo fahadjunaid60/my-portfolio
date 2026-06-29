@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const palettes = [
   ["#7c3aed", "#2563eb"],
   ["#c026d3", "#7c3aed"],
@@ -13,24 +17,53 @@ function hash(str: string) {
   return Math.abs(h);
 }
 
+// Card is 16:10, so the visible portion is 0.625 image-widths tall.
+const CARD_ASPECT = 10 / 16;
+// YoMaCoFo (1000×1717) scrolls its full page in 4s. That distance is
+// (1717/1000 − 0.625) = 1.092 image-widths → this is the shared px/sec rate.
+const RATE_PER_SECOND = 1.092 / 4;
+
 type Props = {
   slug: string;
   title: string;
   image?: string;
+  // Tall full-page screenshot → scroll it top→bottom on hover. Short captures
+  // just cover the card.
+  tall?: boolean;
 };
 
-export function ProjectThumbnail({ slug, title, image }: Props) {
-  // If user later drops a real (tall) screenshot, auto-scroll it on hover.
-  // Technique: background-size 100% auto lets the image overflow downward,
-  // and transitioning background-position from top→bottom scrolls it.
+export function ProjectThumbnail({ slug, title, image, tall = true }: Props) {
   const hasRealImage = image && !image.endsWith(".svg");
+  // Scroll duration is derived per image so every project scrolls at the same
+  // speed as YoMaCoFo (taller screenshots simply take proportionally longer).
+  const [durationMs, setDurationMs] = useState(4000);
+
+  useEffect(() => {
+    if (!tall || !hasRealImage || !image) return;
+    const img = new window.Image();
+    img.onload = () => {
+      if (!img.naturalWidth) return;
+      const ratio = img.naturalHeight / img.naturalWidth;
+      const seconds = Math.max(1, (ratio - CARD_ASPECT) / RATE_PER_SECOND);
+      setDurationMs(Math.round(seconds * 1000));
+    };
+    img.src = image;
+  }, [image, tall, hasRealImage]);
+
   if (hasRealImage) {
     return (
       <div
         role="img"
         aria-label={title}
-        className="absolute inset-0 bg-size-[100%_auto] bg-top bg-no-repeat transition-[background-position] duration-4000 ease-linear motion-safe:group-hover:bg-bottom"
-        style={{ backgroundImage: `url(${image})` }}
+        className={
+          tall
+            ? "absolute inset-0 bg-size-[100%_auto] bg-top bg-no-repeat transition-[background-position] ease-linear motion-safe:group-hover:bg-bottom motion-safe:group-data-[active=true]:bg-bottom"
+            : "absolute inset-0 bg-cover bg-top bg-no-repeat transition-transform duration-700 ease-out group-hover:scale-105"
+        }
+        style={{
+          backgroundImage: `url(${image})`,
+          ...(tall ? { transitionDuration: `${durationMs}ms` } : {}),
+        }}
       />
     );
   }

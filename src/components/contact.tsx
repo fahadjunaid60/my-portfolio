@@ -2,15 +2,15 @@
 
 import { motion } from "framer-motion";
 import { Mail, ArrowRight } from "lucide-react";
-import { GradientBlobs } from "./gradient-blobs";
+import { SectionBackground } from "./section-background";
 import { SectionHeading } from "./section-heading";
-import { GithubIcon, LinkedinIcon } from "./brand-icons";
+import { GithubIcon, LinkedinIcon, FacebookIcon } from "./brand-icons";
 import { site } from "@/lib/data";
 
 export function Contact() {
   return (
-    <section id="contact" className="relative isolate overflow-hidden py-32">
-      <GradientBlobs variant="hero" />
+    <section id="contact" className="relative isolate overflow-hidden py-16 md:py-32">
+      <SectionBackground variant="waves" />
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-10">
         <SectionHeading
           eyebrow="Get in Touch"
@@ -40,6 +40,9 @@ export function Contact() {
             </SocialLink>
             <SocialLink href={site.social.linkedin} label="LinkedIn">
               <LinkedinIcon size={20} />
+            </SocialLink>
+            <SocialLink href={site.social.facebook} label="Facebook">
+              <FacebookIcon size={20} />
             </SocialLink>
           </div>
         </motion.div>

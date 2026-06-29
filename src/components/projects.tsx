@@ -1,65 +1,35 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "./section-heading";
-import { ProjectThumbnail } from "./project-thumbnail";
-import { projects } from "@/lib/data";
+import { SectionBackground } from "./section-background";
+import { ProjectGrid } from "./project-grid";
+import type { ProjectCard } from "@/lib/projects";
 
-export function Projects() {
+export function Projects({ projects }: { projects: ProjectCard[] }) {
   return (
-    <section id="projects" className="relative py-32">
+    <section id="projects" className="relative isolate overflow-hidden py-16 md:py-32">
+      <SectionBackground variant="dots" />
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <SectionHeading
           eyebrow="Selected Work"
           title="Projects I'm proud of."
-          description="A handful of recent builds across law, e-learning, e-commerce, and analytics."
+          description="A handful of recent builds across AI-SEO, e-commerce, healthcare education, and B2B tooling."
         />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
-            <motion.a
-              key={project.slug}
-              href={project.url ?? "#"}
-              target={project.url ? "_blank" : undefined}
-              rel={project.url ? "noreferrer" : undefined}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="glass group relative flex flex-col overflow-hidden rounded-2xl transition-all hover:border-accent-violet/40 hover:-translate-y-1"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <ProjectThumbnail
-                  slug={project.slug}
-                  title={project.title}
-                  image={project.image}
-                />
-                <div className="absolute right-3 top-3 rounded-full bg-black/40 p-2 backdrop-blur-sm transition-transform group-hover:scale-110">
-                  <ArrowUpRight className="size-4 text-white" />
-                </div>
-              </div>
+        <div className="mt-16">
+          <ProjectGrid projects={projects} columns={2} />
+        </div>
 
-              <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-lg font-semibold text-foreground">
-                  {project.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-                  {project.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs text-muted"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.a>
-          ))}
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-accent-violet"
+          >
+            <span className="border-b border-accent-violet/40 pb-0.5 transition-colors group-hover:border-accent-violet">
+              View more projects
+            </span>
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </section>

@@ -19,6 +19,7 @@ import {
 } from "simple-icons";
 import { OpenAiIcon } from "./brand-icons";
 import { SectionHeading } from "./section-heading";
+import { SectionBackground } from "./section-background";
 import { skillGroups, type SkillItem } from "@/lib/data";
 
 const iconBySlug: Record<string, SimpleIcon> = {
@@ -37,15 +38,25 @@ const iconBySlug: Record<string, SimpleIcon> = {
   langchain: siLangchain,
 };
 
+// Use each brand's official color, but fall back to near-white for very dark
+// logos so they stay visible on the dark background.
+function brandColor(hex: string) {
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+  return luminance < 45 ? "#e5e7eb" : `#${hex}`;
+}
+
 function TechIcon({ skill }: { skill: SkillItem }) {
   if (skill.kind === "openai") {
     return <OpenAiIcon size={28} className="text-foreground" />;
   }
   if (skill.kind === "vector-db") {
-    return <Database className="size-7 text-foreground" />;
+    return <Database className="size-7 text-accent-violet" />;
   }
   const icon = skill.slug ? iconBySlug[skill.slug] : undefined;
-  if (!icon) return <Database className="size-7 text-foreground" />;
+  if (!icon) return <Database className="size-7 text-accent-violet" />;
   return (
     <svg
       width={28}
@@ -54,7 +65,7 @@ function TechIcon({ skill }: { skill: SkillItem }) {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
-      className="text-foreground"
+      style={{ color: brandColor(icon.hex) }}
     >
       <path d={icon.path} />
     </svg>
@@ -109,7 +120,8 @@ function MarqueeRow({
 
 export function Skills() {
   return (
-    <section id="skills" className="relative py-32">
+    <section id="skills" className="relative isolate overflow-hidden py-16 md:py-32">
+      <SectionBackground variant="grid" />
       <div className="mx-auto max-w-7xl">
         <div className="px-6 lg:px-10">
           <SectionHeading

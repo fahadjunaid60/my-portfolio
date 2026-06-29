@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Light is the default palette; dark overrides via `:root.dark` (set by the
+  inline FOUC script in layout.tsx). Components reference semantic tokens
+  (--surface, --border-themed, --overlay, etc.) so the swap is automatic.
+*/
+/* Single dark theme, modeled on the Figma template palette. */
+:root {
+  --background: #000319;
+  --foreground: #ffffff;
+  --muted: #b4b6cd;
+  --accent-violet: #7315ff;
+  --accent-blue: #7c3aed;
+  --accent-fuchsia: #c026d3;
+
+  --card: #10132e;
+  --card-border: rgba(255, 255, 255, 0.1);
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-strong: rgba(255, 255, 255, 0.1);
+  --border-themed: rgba(255, 255, 255, 0.1);
+  --border-faint: rgba(255, 255, 255, 0.06);
+  --overlay: rgba(0, 0, 0, 0.5);
+  --scrollbar-track: #000319;
+
+  --gradient-text-from: #ffffff;
+  --gradient-text-mid: #cbacf9;
+  --gradient-text-to: #a78bfa;
+
+  --blob-opacity-strong: 0.5;
+  --blob-opacity-soft: 0.4;
+  --blob-section-opacity: 0.2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-fuchsia: var(--accent-fuchsia);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-border-themed: var(--border-themed);
+  --color-border-faint: var(--border-faint);
+  --color-overlay: var(--overlay);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-geist-sans);
+}
+
+* {
+  border-color: var(--card-border);
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+::selection {
+  background: var(--accent-violet);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-violet), var(--accent-blue));
+  border-radius: 6px;
+}
+
+/*
+  Performance notes:
+  - We deliberately AVOID `backdrop-filter` on cards — it's the single biggest
+    GPU hog on Windows + integrated graphics. The `.glass` class instead uses
+    a solid dark fill that visually approximates frosted glass.
+  - Blob blurs use `blur-2xl` (40px) at most, not `blur-3xl` (64px).
+  - Blob animations are gated behind `prefers-reduced-motion`.
+*/
+
+@keyframes blob-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(40px, -30px, 0) scale(1.05); }
+}
+@keyframes blob-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-50px, 40px, 0) scale(1.05); }
+}
+
+.blob-a,
+.blob-b {
+  will-change: transform;
+}
+.blob-a { opacity: var(--blob-opacity-strong); }
+.blob-b { opacity: var(--blob-opacity-soft); }
+.blob-section { opacity: var(--blob-section-opacity); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .blob-a { animation: blob-drift-a 24s ease-in-out infinite; }
+  .blob-b { animation: blob-drift-b 28s ease-in-out infinite; }
+}
+
+/*
+  Marquee track for the skills section. Items are duplicated in markup so
+  translating by -50% creates a seamless loop. Gap between tiles is included
+  in the half-width offset, so the seam is invisible.
+*/
+@keyframes marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.marquee-track {
+  width: max-content;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-left  { animation: marquee-left 36s linear infinite; }
+  .marquee-right { animation: marquee-right 36s linear infinite; }
+  .marquee-mask:hover .marquee-track { animation-play-state: paused; }
+}
+
+/*
+  Hero polygon background: a drifting low-poly mesh plus floating/spinning
+  geometric shapes. All motion gated behind prefers-reduced-motion.
+*/
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-22px); }
+}
+@keyframes hero-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(22px, -16px); }
+}
+@keyframes hero-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes hero-twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.7; }
+}
+.hero-mesh,
+.hero-float,
+.hero-spin {
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-mesh { animation: hero-drift 32s ease-in-out infinite; }
+  .hero-float {
+    animation: hero-float var(--dur, 14s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  .hero-spin {
+    animation: hero-spin var(--dur, 40s) linear infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  .hero-dot {
+    animation: hero-twinkle var(--dur, 5s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+}
+
+.glass {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--gradient-text-from) 0%,
+    var(--gradient-text-mid) 50%,
+    var(--gradient-text-to) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.display-tight {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
