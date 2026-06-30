@@ -1,6 +1,6 @@
 import "server-only";
 import { getPayloadClient } from "./payload";
-import { mediaToOg } from "./settings";
+import { mediaToOg, type OgImage } from "./settings";
 
 export type Post = {
   id: string;
@@ -12,6 +12,9 @@ export type Post = {
   tags: string[];
   body: string; // markdown
   ogImage?: string; // per-post social image URL
+  // Full OG image incl. width/height — crawlers (Facebook, etc.) need the
+  // dimensions to render a preview on first scrape.
+  ogImageMeta?: OgImage;
 };
 
 type MediaRef =
@@ -45,6 +48,7 @@ export type CommentItem = {
 };
 
 function toPost(doc: PostDoc): Post {
+  const og = mediaToOg(doc.ogImage);
   return {
     id: doc.id,
     slug: doc.slug,
@@ -54,7 +58,8 @@ function toPost(doc: PostDoc): Post {
     readingMinutes: doc.readingMinutes,
     tags: (doc.tags ?? []).filter((t): t is string => Boolean(t)),
     body: doc.body,
-    ogImage: mediaToOg(doc.ogImage)?.url,
+    ogImage: og?.url,
+    ogImageMeta: og ?? undefined,
   };
 }
 

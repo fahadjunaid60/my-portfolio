@@ -26,9 +26,9 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) return {};
-  const image = post.ogImage
-    ? { url: post.ogImage }
-    : await getOgImage("default");
+  // Prefer the post's own OG image (with width/height so crawlers render it on
+  // first scrape); fall back to the site default.
+  const image = post.ogImageMeta ?? (await getOgImage("default"));
   return ogMetadata({
     title: `${post.title} — Fad Junaid`,
     description: post.excerpt,
