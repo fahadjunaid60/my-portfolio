@@ -10,6 +10,8 @@ import { PostCard } from "@/components/post-card";
 import { Contact } from "@/components/contact";
 import { getPostsSortedByDate } from "@/lib/blog";
 import { getProjects } from "@/lib/projects";
+import { JsonLd } from "@/components/json-ld";
+import { personJsonLd, websiteJsonLd } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -19,6 +21,7 @@ export default async function Home() {
 
   return (
     <>
+      <JsonLd data={[personJsonLd(), websiteJsonLd()]} />
       <Hero />
       <About />
       <Skills />

@@ -15,6 +15,7 @@ export async function generateMetadata() {
     description:
       "Available for freelance and remote roles. Send a message and I'll get back to you within a business day.",
     image: await getOgImage("contact"),
+    path: "/contact",
   });
 }
 

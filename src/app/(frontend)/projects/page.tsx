@@ -8,6 +8,7 @@ export const metadata = {
   title: "Projects — Fad Junaid",
   description:
     "Selected work across AI-SEO, e-commerce, healthcare education, immersive tours, and B2B tooling.",
+  alternates: { canonical: "/projects" },
 };
 
 export default async function ProjectsPage() {

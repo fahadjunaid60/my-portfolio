@@ -1,3 +1,9 @@
+// Career start year — `yearsOfExperience` derives from this so the number
+// stays current every year without manual edits.
+export const careerStartYear = 2018;
+export const yearsOfExperience =
+  new Date().getFullYear() - careerStartYear;
+
 export const site = {
   name: "Fad Junaid",
   shortName: "FAD",
@@ -5,7 +11,7 @@ export const site = {
   location: "Cotabato City, Philippines",
   email: "fahadjunaid60@gmail.com",
   tagline: "Full-Stack Developer crafting scalable web solutions.",
-  bio: "Full-stack developer with seven years of experience building efficient, scalable web applications. I specialize in bridging tech with business value — from polished React interfaces to performant .NET and Node.js backends.",
+  bio: `Full-stack developer with ${yearsOfExperience} years of experience building efficient, scalable web applications. I specialize in bridging tech with business value — from polished React interfaces to performant .NET and Node.js backends.`,
   social: {
     github: "https://github.com/fahadjunaid60",
     linkedin: "https://www.linkedin.com/in/fahad-junaid-72a257166/",
@@ -16,7 +22,7 @@ export const site = {
 };
 
 export const stats = [
-  { value: "7", suffix: "Years", label: "Experience" },
+  { value: String(yearsOfExperience), suffix: "Years", label: "Experience" },
   { value: "30+", suffix: "", label: "Projects Shipped" },
   { value: "20+", suffix: "", label: "Happy Clients" },
 ];

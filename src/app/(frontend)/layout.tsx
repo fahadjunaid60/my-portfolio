@@ -3,6 +3,7 @@ import { Inter, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { getOgImage } from "@/lib/settings";
+import { yearsOfExperience } from "@/lib/data";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,8 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(siteUrl),
     title: "Fad Junaid — Full-Stack Developer",
-    description:
-      "Full-stack developer with seven years of experience crafting scalable web applications. Specializing in React, Next.js, .NET Core, and Node.js.",
+    description: `Full-stack developer with ${yearsOfExperience} years of experience crafting scalable web applications. Specializing in React, Next.js, .NET Core, and Node.js.`,
+    alternates: { canonical: "/" },
     keywords: [
       "Fad Junaid",
       "Full Stack Developer",

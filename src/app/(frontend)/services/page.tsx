@@ -70,6 +70,7 @@ export const metadata = {
   title: "Services — Fad Junaid",
   description:
     "Front-end, back-end, API design, AI automation, CMS, and database work. What's included, how I work, and what 'done' looks like.",
+  alternates: { canonical: "/services" },
 };
 
 const iconMap: Record<string, LucideIcon> = {

@@ -105,9 +105,10 @@ export function Hero() {
             animate="show"
             custom={0}
             variants={fadeUp}
-            className="display-tight text-[clamp(2.6rem,6vw,5rem)] leading-[1.02]"
+            className="display-tight text-[clamp(2.4rem,4.5vw,3.75rem)] leading-[1.05]"
           >
-            I&apos;m <span className="text-accent-violet">{site.name}</span>
+            Building <span className="text-accent-violet">products</span> that
+            move fast and scale far.
           </motion.h1>
 
           <motion.p
@@ -117,8 +118,9 @@ export function Hero() {
             variants={fadeUp}
             className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-muted md:text-lg lg:mx-0"
           >
-            A full-stack developer based in the Philippines, building efficient,
-            scalable products with React, Next.js, and .NET.
+            Full-stack developer crafting efficient, scalable web applications
+            with React, Next.js, and .NET — turning ideas into polished,
+            production-ready products.
           </motion.p>
         </div>
 

@@ -6,6 +6,8 @@ import { Markdown } from "@/components/markdown";
 import { Comments } from "@/components/comments";
 import { getPost, getPostsSortedByDate, getComments } from "@/lib/blog";
 import { getOgImage, ogMetadata } from "@/lib/settings";
+import { JsonLd } from "@/components/json-ld";
+import { blogPostingJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 
 // Content is served from Payload, so render per-request.
 export const dynamic = "force-dynamic";
@@ -31,6 +33,13 @@ export async function generateMetadata({
     title: `${post.title} — Fad Junaid`,
     description: post.excerpt,
     image,
+    path: `/blog/${post.slug}`,
+    article: {
+      publishedTime: post.date,
+      modifiedTime: post.date,
+      authors: ["Fad Junaid"],
+      tags: post.tags,
+    },
   });
 }
 
@@ -52,6 +61,16 @@ export default async function BlogPostPage({
 
   return (
     <>
+      <JsonLd
+        data={[
+          blogPostingJsonLd(post),
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
       <section className="relative isolate overflow-hidden pt-36 pb-12">
         <GradientBlobs />
         <div className="relative mx-auto max-w-3xl px-6 lg:px-10">

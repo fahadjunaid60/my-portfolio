@@ -11,7 +11,7 @@ import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
 import { GradientShape } from "@/components/section-background";
 import { getOgImage, ogMetadata } from "@/lib/settings";
-import { site } from "@/lib/data";
+import { site, yearsOfExperience } from "@/lib/data";
 
 const journey = [
   {
@@ -68,9 +68,9 @@ const faqs = [
 export async function generateMetadata() {
   return ogMetadata({
     title: "About — Fad Junaid",
-    description:
-      "Full-stack developer with seven years of experience. Background, working style, and what I care about when I build software.",
+    description: `Full-stack developer with ${yearsOfExperience} years of experience. Background, working style, and what I care about when I build software.`,
     image: await getOgImage("about"),
+    path: "/about",
   });
 }
 
@@ -151,8 +151,9 @@ export default function AboutPage() {
           <div className="space-y-8 lg:col-span-7">
             <Prose>
               <p>
-                I&apos;m a full-stack developer with seven years of professional
-                experience. I started writing code in 2018 and never quite got
+                I&apos;m a full-stack developer with {yearsOfExperience} years of
+                professional experience. I started writing code in 2018 and
+                never quite got
                 tired of it — I still get a kick out of shipping something that
                 people actually use the next day.
               </p>

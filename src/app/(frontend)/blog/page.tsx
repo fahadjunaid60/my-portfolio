@@ -6,6 +6,7 @@ export const metadata = {
   title: "Blog — Fad Junaid",
   description:
     "Notes from real client work — stack choices, AI in production, freelancing, and the messy parts in between.",
+  alternates: { canonical: "/blog" },
 };
 
 // Content is served from Payload, so render per-request.

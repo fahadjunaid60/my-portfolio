@@ -50,25 +50,42 @@ export async function getOgImage(page: OgPage = "default"): Promise<OgImage | nu
 }
 
 // Builds OG + Twitter metadata for a page. metadataBase is inherited from the
-// root layout, so relative /media URLs resolve to absolute for crawlers.
+// root layout, so relative paths (canonical, /media URLs) resolve to absolute
+// for crawlers. Pass `path` for a canonical URL; pass `article` for blog posts.
 export function ogMetadata(opts: {
   title: string;
   description: string;
   image: OgImage | null;
+  /** Canonical path, e.g. "/about" or "/blog/my-post". */
+  path?: string;
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    authors?: string[];
+    tags?: string[];
+  };
 }): Metadata {
-  const { title, description, image } = opts;
+  const { title, description, image, path, article } = opts;
   const images = image
     ? [{ url: image.url, width: image.width, height: image.height }]
     : undefined;
   return {
     title,
     description,
+    alternates: path ? { canonical: path } : undefined,
     openGraph: {
       title,
       description,
-      type: "website",
+      url: path,
+      type: article ? "article" : "website",
       locale: "en_US",
       images,
+      ...(article && {
+        publishedTime: article.publishedTime,
+        modifiedTime: article.modifiedTime,
+        authors: article.authors,
+        tags: article.tags,
+      }),
     },
     twitter: {
       card: "summary_large_image",
