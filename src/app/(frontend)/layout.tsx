@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: "Fad Junaid — Full-Stack Developer",
       description:
-        "Full-stack developer crafting scalable web applications with React, Next.js, and .NET Core.",
+        "Philippines-based full-stack developer building scalable web apps and AI automation. Open to freelance and remote work.",
       type: "website",
       locale: "en_US",
       url: siteUrl,
@@ -62,7 +62,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Fad Junaid — Full-Stack Developer",
       description:
-        "Full-stack developer crafting scalable web applications with React, Next.js, and .NET Core.",
+        "Philippines-based full-stack developer building scalable web apps and AI automation. Open to freelance and remote work.",
       images: og ? [og.url] : undefined,
     },
   };
