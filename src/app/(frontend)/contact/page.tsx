@@ -11,9 +11,9 @@ import { site } from "@/lib/data";
 
 export async function generateMetadata() {
   return ogMetadata({
-    title: "Contact — Fad Junaid",
+    title: "Contact Fad Junaid — Freelance .NET + Next.js Developer",
     description:
-      "Available for freelance and remote roles. Send a message and I'll get back to you within a business day.",
+      "Hire a Philippines-based .NET + Next.js developer for freelance and remote work, including AI automation. I'll reply within a business day.",
     image: await getOgImage("contact"),
     path: "/contact",
   });

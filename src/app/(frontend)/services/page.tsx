@@ -67,9 +67,9 @@ const faqs = [
 ];
 
 export const metadata = {
-  title: "Services — Fad Junaid",
+  title: "Services — .NET, Next.js & AI Automation | Fad Junaid",
   description:
-    "Front-end, back-end, API design, AI automation, CMS, and database work. What's included, how I work, and what 'done' looks like.",
+    "Freelance full-stack development in the .NET + Next.js stack, plus AI automation, REST API design, CMS, and database work. What's included, how I work, and what 'done' looks like.",
   alternates: { canonical: "/services" },
 };
 

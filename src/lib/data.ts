@@ -10,8 +10,9 @@ export const site = {
   role: "Software & AI Developer",
   location: "Cotabato City, Philippines",
   email: "fahadjunaid60@gmail.com",
-  tagline: "Full-Stack Developer crafting scalable web solutions.",
-  bio: `Full-stack developer with ${yearsOfExperience} years of experience building efficient, scalable web applications. I specialize in bridging tech with business value — from polished React interfaces to performant .NET and Node.js backends.`,
+  tagline:
+    "Full-stack .NET + Next.js developer & AI automation specialist.",
+  bio: `Full-stack developer with ${yearsOfExperience} years of experience building efficient, scalable web applications. I pair the rare .NET + Next.js stack with AI automation — from polished React/Next.js interfaces to performant .NET and Node.js backends, plus agentic workflows that remove manual work.`,
   social: {
     github: "https://github.com/fahadjunaid60",
     linkedin: "https://www.linkedin.com/in/fahad-junaid-72a257166/",

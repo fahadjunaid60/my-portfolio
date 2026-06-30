@@ -5,9 +5,9 @@ import { getProjectsFull } from "@/lib/projects";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Projects — Fad Junaid",
+  title: "Projects — Fad Junaid | .NET + Next.js & AI Builds",
   description:
-    "Selected work across AI-SEO, e-commerce, healthcare education, immersive tours, and B2B tooling.",
+    "Full-stack portfolio: selected work across AI-SEO, e-commerce, healthcare education, immersive tours, and B2B tooling, built with .NET, Next.js, and AI automation.",
   alternates: { canonical: "/projects" },
 };
 

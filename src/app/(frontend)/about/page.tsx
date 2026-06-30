@@ -67,8 +67,8 @@ const faqs = [
 
 export async function generateMetadata() {
   return ogMetadata({
-    title: "About — Fad Junaid",
-    description: `Full-stack developer with ${yearsOfExperience} years of experience. Background, working style, and what I care about when I build software.`,
+    title: "About Fad Junaid — .NET + Next.js & AI Automation Developer",
+    description: `Philippines-based full-stack developer with ${yearsOfExperience} years pairing .NET with Next.js, plus AI automation. My background, working style, and what I care about when building software.`,
     image: await getOgImage("about"),
     path: "/about",
   });

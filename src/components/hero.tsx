@@ -100,10 +100,20 @@ export function Hero() {
       <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-6 lg:grid-cols-2 lg:content-center lg:gap-x-6 lg:gap-y-3 lg:px-10">
         {/* Copy */}
         <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <motion.h1
+          <motion.p
             initial="hidden"
             animate="show"
             custom={0}
+            variants={fadeUp}
+            className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-accent-violet sm:text-sm"
+          >
+            Full-Stack Developer · .NET + Next.js · AI Automation · Philippines
+          </motion.p>
+
+          <motion.h1
+            initial="hidden"
+            animate="show"
+            custom={0.08}
             variants={fadeUp}
             className="display-tight text-[clamp(2.4rem,4.5vw,3.75rem)] leading-[1.05]"
           >
@@ -114,12 +124,12 @@ export function Hero() {
           <motion.p
             initial="hidden"
             animate="show"
-            custom={0.15}
+            custom={0.2}
             variants={fadeUp}
             className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-muted md:text-lg lg:mx-0"
           >
-            Full-stack developer crafting efficient, scalable web applications
-            with React, Next.js, and .NET — turning ideas into polished,
+            Full-stack developer pairing the rare .NET + Next.js stack with AI
+            automation — turning ideas into polished, scalable,
             production-ready products.
           </motion.p>
         </div>
